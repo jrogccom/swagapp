@@ -9,7 +9,10 @@
 #import "JAVDetailViewController.h"
 
 @interface JAVDetailViewController ()
+@property (weak, nonatomic) IBOutlet UITextView *bookInfoTextView;
+@property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 - (void)configureView;
+- (IBAction)checkoutButtonPressed:(id)sender;
 @end
 
 @implementation JAVDetailViewController
@@ -33,6 +36,9 @@
     if (self.detailItem) {
         self.detailDescriptionLabel.text = [self.detailItem description];
     }
+}
+
+- (IBAction)checkoutButtonPressed:(id)sender {
 }
 
 - (void)viewDidLoad
