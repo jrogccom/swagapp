@@ -22,6 +22,8 @@
 		BC04203619AACC6700B9D1BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201519AACC6700B9D1BA /* UIKit.framework */; };
 		BC04203E19AACC6700B9D1BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC04203C19AACC6700B9D1BA /* InfoPlist.strings */; };
 		BC04204019AACC6700B9D1BA /* SWAGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC04203F19AACC6700B9D1BA /* SWAGTests.m */; };
+		BC04204B19AAEC4400B9D1BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */; };
+		BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,9 @@
 		BC04203B19AACC6700B9D1BA /* SWAGTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SWAGTests-Info.plist"; sourceTree = "<group>"; };
 		BC04203D19AACC6700B9D1BA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC04203F19AACC6700B9D1BA /* SWAGTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWAGTests.m; sourceTree = "<group>"; };
+		BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BC04204C19AAED2B00B9D1BA /* JAVAddBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVAddBookViewController.h; sourceTree = "<group>"; };
+		BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVAddBookViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC04204B19AAEC4400B9D1BA /* SystemConfiguration.framework in Frameworks */,
 				BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */,
 				BC04201619AACC6700B9D1BA /* UIKit.framework in Frameworks */,
 				BC04201219AACC6700B9D1BA /* Foundation.framework in Frameworks */,
@@ -104,6 +110,7 @@
 		BC04201019AACC6700B9D1BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */,
 				BC04201119AACC6700B9D1BA /* Foundation.framework */,
 				BC04201319AACC6700B9D1BA /* CoreGraphics.framework */,
 				BC04201519AACC6700B9D1BA /* UIKit.framework */,
@@ -122,6 +129,8 @@
 				BC04202719AACC6700B9D1BA /* JAVMasterViewController.m */,
 				BC04202919AACC6700B9D1BA /* JAVDetailViewController.h */,
 				BC04202A19AACC6700B9D1BA /* JAVDetailViewController.m */,
+				BC04204C19AAED2B00B9D1BA /* JAVAddBookViewController.h */,
+				BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */,
 				BC04202C19AACC6700B9D1BA /* Images.xcassets */,
 				BC04201819AACC6700B9D1BA /* Supporting Files */,
 			);
@@ -256,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC04202219AACC6700B9D1BA /* JAVAppDelegate.m in Sources */,
+				BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */,
 				BC04202819AACC6700B9D1BA /* JAVMasterViewController.m in Sources */,
 				BC04201E19AACC6700B9D1BA /* main.m in Sources */,
 				BC04202B19AACC6700B9D1BA /* JAVDetailViewController.m in Sources */,
