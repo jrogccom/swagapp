@@ -10,4 +10,8 @@
 
 @implementation JAVEntryItem
 
+- (NSDate *)lastCheckedOut
+{
+    return (NSDate *)_checkoutHistory.lastObject;
+}
 @end

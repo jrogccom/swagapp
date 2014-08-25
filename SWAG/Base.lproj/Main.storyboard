@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -67,7 +67,7 @@
                     <navigationItem key="navigationItem" title="Master" id="rxm-i5-diM">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="8q7-gf-IJm">
                             <connections>
-                                <segue destination="ro2-8J-hJO" kind="push" id="kKP-K1-6rx"/>
+                                <segue destination="ro2-8J-hJO" kind="push" identifier="addItem" id="kKP-K1-6rx"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -132,17 +132,20 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="POD-5U-W6o"/>
+                    <navigationItem key="navigationItem" id="POD-5U-W6o">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="t7Z-hb-zPn"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="authorsTextField" destination="eLq-1G-i04" id="43e-jT-TGQ"/>
                         <outlet property="bookTitleTextField" destination="yWP-ki-fa5" id="sgg-n7-VVc"/>
                         <outlet property="categoriesTextField" destination="Zp9-qx-vO3" id="fLf-iT-MJw"/>
+                        <outlet property="publisherTextField" destination="K4I-tp-SrY" id="izP-4z-7ar"/>
                         <outlet property="scrollView" destination="Be6-dF-Gdx" id="wVC-NY-sEo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgJ-aG-DYe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="955" y="-247"/>
+            <point key="canvasLocation" x="917" y="-216"/>
         </scene>
         <!--Detail View Controller - Detail-->
         <scene sceneID="Cn3-H9-jdl">
@@ -205,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="902" y="64"/>
+            <point key="canvasLocation" x="897" y="399"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

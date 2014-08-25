@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface JAVEntryItem : NSObject
+@interface JAVEntryItem : NSObject <NSCoding>
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *publisher;
+@property (strong, nonatomic) NSOrderedSet *authors;
+@property (strong, nonatomic) NSSet *categories;
+@property (strong, nonatomic) NSArray *checkoutHistory;
+@property (strong, nonatomic) NSNumber *entryNumber;
+@property (readonly) NSDate *lastCheckedOut;
 
 @end

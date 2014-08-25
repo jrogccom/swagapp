@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EA604919ABD44900D1AB2E /* JAVEntryItem.m */; };
+		61C8DA214FD044F8AD3092FA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78B90582A4416D8F804DFC /* libPods.a */; };
 		BC04201219AACC6700B9D1BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201119AACC6700B9D1BA /* Foundation.framework */; };
 		BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201319AACC6700B9D1BA /* CoreGraphics.framework */; };
 		BC04201619AACC6700B9D1BA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201519AACC6700B9D1BA /* UIKit.framework */; };
@@ -37,6 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05EA604819ABD44900D1AB2E /* JAVEntryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVEntryItem.h; sourceTree = "<group>"; };
+		05EA604919ABD44900D1AB2E /* JAVEntryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVEntryItem.m; sourceTree = "<group>"; };
+		0B30FA698F534C17B3377DF7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		BC04200E19AACC6700B9D1BA /* SWAG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWAG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC04201119AACC6700B9D1BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BC04201319AACC6700B9D1BA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -61,6 +66,7 @@
 		BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BC04204C19AAED2B00B9D1BA /* JAVAddBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVAddBookViewController.h; sourceTree = "<group>"; };
 		BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVAddBookViewController.m; sourceTree = "<group>"; };
+		BC78B90582A4416D8F804DFC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 				BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */,
 				BC04201619AACC6700B9D1BA /* UIKit.framework in Frameworks */,
 				BC04201219AACC6700B9D1BA /* Foundation.framework in Frameworks */,
+				61C8DA214FD044F8AD3092FA /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05EA604719ABD40C00D1AB2E /* model */ = {
+			isa = PBXGroup;
+			children = (
+				05EA604819ABD44900D1AB2E /* JAVEntryItem.h */,
+				05EA604919ABD44900D1AB2E /* JAVEntryItem.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 		BC04200519AACC6700B9D1BA = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +111,7 @@
 				BC04203919AACC6700B9D1BA /* SWAGTests */,
 				BC04201019AACC6700B9D1BA /* Frameworks */,
 				BC04200F19AACC6700B9D1BA /* Products */,
+				0B30FA698F534C17B3377DF7 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,6 +132,7 @@
 				BC04201319AACC6700B9D1BA /* CoreGraphics.framework */,
 				BC04201519AACC6700B9D1BA /* UIKit.framework */,
 				BC04203319AACC6700B9D1BA /* XCTest.framework */,
+				BC78B90582A4416D8F804DFC /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -122,6 +140,7 @@
 		BC04201719AACC6700B9D1BA /* SWAG */ = {
 			isa = PBXGroup;
 			children = (
+				05EA604719ABD40C00D1AB2E /* model */,
 				BC04202019AACC6700B9D1BA /* JAVAppDelegate.h */,
 				BC04202119AACC6700B9D1BA /* JAVAppDelegate.m */,
 				BC04202319AACC6700B9D1BA /* Main.storyboard */,
@@ -173,9 +192,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC04204319AACC6700B9D1BA /* Build configuration list for PBXNativeTarget "SWAG" */;
 			buildPhases = (
+				70A39B49058241BBB94E813D /* Check Pods Manifest.lock */,
 				BC04200A19AACC6700B9D1BA /* Sources */,
 				BC04200B19AACC6700B9D1BA /* Frameworks */,
 				BC04200C19AACC6700B9D1BA /* Resources */,
+				BC347CC818A94F899A81A184 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,6 +280,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		70A39B49058241BBB94E813D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BC347CC818A94F899A81A184 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BC04200A19AACC6700B9D1BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -267,6 +321,7 @@
 				BC04202219AACC6700B9D1BA /* JAVAppDelegate.m in Sources */,
 				BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */,
 				BC04202819AACC6700B9D1BA /* JAVMasterViewController.m in Sources */,
+				05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */,
 				BC04201E19AACC6700B9D1BA /* main.m in Sources */,
 				BC04202B19AACC6700B9D1BA /* JAVDetailViewController.m in Sources */,
 			);
@@ -390,6 +445,7 @@
 		};
 		BC04204419AACC6700B9D1BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B30FA698F534C17B3377DF7 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -403,6 +459,7 @@
 		};
 		BC04204519AACC6700B9D1BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B30FA698F534C17B3377DF7 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -473,6 +530,7 @@
 				BC04204519AACC6700B9D1BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC04204619AACC6700B9D1BA /* Build configuration list for PBXNativeTarget "SWAGTests" */ = {
 			isa = XCConfigurationList;
@@ -481,6 +539,7 @@
 				BC04204819AACC6700B9D1BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

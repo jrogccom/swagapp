@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JAVAddBookViewController : UIViewController
+@interface JAVAddBookViewController : UIViewController <UIAlertViewDelegate>
 
 @end

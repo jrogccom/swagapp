@@ -8,6 +8,11 @@
 
 #import "JAVAddBookViewController.h"
 
+typedef NS_ENUM(NSInteger, JAVAlertViewType)
+{
+    JAVIncompleteSubmissionType,
+    JAVUnsavedDataType
+};
 @interface JAVAddBookViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *bookTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *authorsTextField;
@@ -15,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *categoriesTextField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)submitButtonPressed:(id)sender;
+
 
 @end
 
@@ -53,6 +59,26 @@
 */
 
 - (IBAction)submitButtonPressed:(id)sender {
-    
+    if (_bookTitleTextField.text.length == 0 || _publisherTextField.text.length == 0 || _authorsTextField.text.length == 0 ||
+        _categoriesTextField.text.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Fields missing" message:@"Please fill all fields before submitting." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        alertView.tag = JAVIncompleteSubmissionType;
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (alertView.tag) {
+        case JAVIncompleteSubmissionType:
+            
+            break;
+        case JAVUnsavedDataType:
+            
+            break;
+        default:
+            break;
+    }
 }
 @end
