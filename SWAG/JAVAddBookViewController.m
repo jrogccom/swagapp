@@ -7,12 +7,20 @@
 //
 
 #import "JAVAddBookViewController.h"
+#import "JAVEntryItem.h"
 
 typedef NS_ENUM(NSInteger, JAVAlertViewType)
 {
     JAVIncompleteSubmissionType,
     JAVUnsavedDataType
 };
+
+typedef NS_ENUM(NSInteger, JAVButtonTag)
+{
+    JAVSubmitTag,
+    JAVCancelTag
+};
+
 @interface JAVAddBookViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *bookTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *authorsTextField;
@@ -20,8 +28,7 @@ typedef NS_ENUM(NSInteger, JAVAlertViewType)
 @property (weak, nonatomic) IBOutlet UITextField *categoriesTextField;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)submitButtonPressed:(id)sender;
-
-
+- (IBAction)cancelButtonPressed:(id)sender;
 @end
 
 @implementation JAVAddBookViewController
@@ -40,7 +47,6 @@ typedef NS_ENUM(NSInteger, JAVAlertViewType)
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -61,9 +67,18 @@ typedef NS_ENUM(NSInteger, JAVAlertViewType)
 - (IBAction)submitButtonPressed:(id)sender {
     if (_bookTitleTextField.text.length == 0 || _publisherTextField.text.length == 0 || _authorsTextField.text.length == 0 ||
         _categoriesTextField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Fields missing" message:@"Please fill all fields before submitting." delegate:self cancelButtonTitle:@"Return" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Fields missing" message:@"Please fill all fields before submitting." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         alertView.tag = JAVIncompleteSubmissionType;
+        [alertView show];
+    } else {
+        [self performSegueWithIdentifier:@"addItem" sender:sender];
     }
+}
+
+- (IBAction)cancelButtonPressed:(id)sender {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Entry not submitted" message:@"Information not saved and will be lost." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Return", nil];
+    alertView.tag = JAVUnsavedDataType;
+    [alertView show];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -75,10 +90,26 @@ typedef NS_ENUM(NSInteger, JAVAlertViewType)
             
             break;
         case JAVUnsavedDataType:
+            switch (buttonIndex) {
+                case 0:
+                    break;
+                case 1:
+                    // SEGUE BACK
+                    break;
+                    
+                default:
+                    break;
+            }
             
             break;
         default:
             break;
     }
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+}
+
+
+
 @end
