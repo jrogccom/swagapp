@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EA604919ABD44900D1AB2E /* JAVEntryItem.m */; };
+		05EA60A019AD391C00D1AB2E /* JAVItemStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EA609F19AD391C00D1AB2E /* JAVItemStore.m */; };
 		61C8DA214FD044F8AD3092FA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78B90582A4416D8F804DFC /* libPods.a */; };
 		BC04201219AACC6700B9D1BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201119AACC6700B9D1BA /* Foundation.framework */; };
 		BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201319AACC6700B9D1BA /* CoreGraphics.framework */; };
@@ -41,6 +42,8 @@
 /* Begin PBXFileReference section */
 		05EA604819ABD44900D1AB2E /* JAVEntryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVEntryItem.h; sourceTree = "<group>"; };
 		05EA604919ABD44900D1AB2E /* JAVEntryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVEntryItem.m; sourceTree = "<group>"; };
+		05EA609E19AD391C00D1AB2E /* JAVItemStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVItemStore.h; sourceTree = "<group>"; };
+		05EA609F19AD391C00D1AB2E /* JAVItemStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVItemStore.m; sourceTree = "<group>"; };
 		0B30FA698F534C17B3377DF7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		BC04200E19AACC6700B9D1BA /* SWAG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWAG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC04201119AACC6700B9D1BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -140,6 +143,8 @@
 		BC04201719AACC6700B9D1BA /* SWAG */ = {
 			isa = PBXGroup;
 			children = (
+				05EA609E19AD391C00D1AB2E /* JAVItemStore.h */,
+				05EA609F19AD391C00D1AB2E /* JAVItemStore.m */,
 				05EA604719ABD40C00D1AB2E /* model */,
 				BC04202019AACC6700B9D1BA /* JAVAppDelegate.h */,
 				BC04202119AACC6700B9D1BA /* JAVAppDelegate.m */,
@@ -320,6 +325,7 @@
 			files = (
 				BC04202219AACC6700B9D1BA /* JAVAppDelegate.m in Sources */,
 				BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */,
+				05EA60A019AD391C00D1AB2E /* JAVItemStore.m in Sources */,
 				BC04202819AACC6700B9D1BA /* JAVMasterViewController.m in Sources */,
 				05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */,
 				BC04201E19AACC6700B9D1BA /* main.m in Sources */,
