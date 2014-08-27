@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JAVAddBookViewController : UIViewController <UIAlertViewDelegate>
-
+@property (strong, readonly) NSDictionary *collectedData;
 @end

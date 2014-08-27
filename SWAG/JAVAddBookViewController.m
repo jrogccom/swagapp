@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
 };
 
 @interface JAVAddBookViewController ()
+{
+    BOOL _addingEntry;
+}
 @property (weak, nonatomic) IBOutlet UITextField *bookTitleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *authorsTextField;
 @property (weak, nonatomic) IBOutlet UITextField *publisherTextField;
@@ -71,7 +74,8 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
         alertView.tag = JAVIncompleteSubmissionType;
         [alertView show];
     } else {
-        [self performSegueWithIdentifier:@"addItem" sender:sender];
+        _addingEntry = YES;
+        [self performSegueWithIdentifier:@"backToMaster" sender:sender];
     }
 }
 
@@ -81,33 +85,52 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
     [alertView show];
 }
 
+- (NSDictionary *)collectedData
+{
+    if (_addingEntry) {
+    NSArray *authors = [_authorsTextField.text componentsSeparatedByString:@","].copy;
+    [authors makeObjectsPerformSelector:@selector(stringByTrimmingCharactersInSet:) withObject:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSArray *categories = [_categoriesTextField.text componentsSeparatedByString:@","].copy;
+    [categories makeObjectsPerformSelector:@selector(stringByTrimmingCharactersInSet:) withObject:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSString *title = _bookTitleTextField.text.copy;
+    NSString *publisher = _publisherTextField.text.copy;
+    
+    return @{@"title": title, @"authors": authors, @"categories": categories, @"publisher": publisher};
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (alertView.tag) {
-        case JAVIncompleteSubmissionType:
-            
-            break;
         case JAVUnsavedDataType:
             switch (buttonIndex) {
                 case 0:
+                    NSLog(@"option 0");
                     break;
                 case 1:
+                    NSLog(@"option 1");
+                    _addingEntry = NO;
+                    [self performSegueWithIdentifier:@"backToMaster" sender:nil];
                     // SEGUE BACK
                     break;
-                    
                 default:
                     break;
-            }
-            
-            break;
+            } break;
         default:
             break;
     }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if (_addingEntry) {
+        [segue.destinationViewController performSelector:@selector(newBookFromDictionary:) withObject:[self collectedData]];
+    }
 }
 
 

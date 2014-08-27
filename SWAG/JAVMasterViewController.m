@@ -7,16 +7,25 @@
 //
 
 #import "JAVMasterViewController.h"
-
 #import "JAVDetailViewController.h"
+#import "JAVAddBookViewController.h"
+@import CoreData;
 
 @interface JAVMasterViewController () {
     NSMutableArray *_objects;
 }
+@property (weak, nonatomic) NSManagedObjectModel *model;
 @end
 
 @implementation JAVMasterViewController
 
+/*- (NSManagedObjectModel *)model
+{
+    if (!_model) {
+        _model = [[UIApplication sharedApplication].delegate model];
+    }
+    return _model;
+}*/
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -110,7 +119,8 @@
     }
 }
 
-- (IBAction)done:(UIStoryboardSegue *)segueBack {
+- (IBAction)unwoundFromAddItem:(UIStoryboardSegue *)segueBack
+{
     
 }
 @end
