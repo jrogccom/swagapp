@@ -128,9 +128,6 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if (_addingEntry) {
-        [segue.destinationViewController performSelector:@selector(newBookFromDictionary:) withObject:[self collectedData]];
-    }
 }
 
 
