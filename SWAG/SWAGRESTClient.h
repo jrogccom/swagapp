@@ -9,5 +9,5 @@
 #import "AFRESTClient.h"
 
 @interface SWAGRESTClient : AFRESTClient <AFIncrementalStoreHTTPClient>
-
++ (SWAGRESTClient *)sharedClient ;
 @end

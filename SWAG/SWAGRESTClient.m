@@ -7,6 +7,7 @@
 //
 
 #import "SWAGRESTClient.h"
+#import "Book.h"
 
 static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.com/53f4eb9b001f0f000704ea35/";
 
@@ -37,7 +38,7 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
 - (NSSet *)entityExclusionSet
 {
     if (!_entityExclusionSet) {
-        _entityExclusionSet = [NSSet setWithArray:@[@"author", @"category", @"publisher"]];
+        _entityExclusionSet = [NSSet setWithArray:@[@"Author", @"Category", @"Publisher"]];
     }
     return _entityExclusionSet;
 }
@@ -46,6 +47,7 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
 
 - (BOOL)shouldFetchRemoteAttributeValuesForObjectWithID:(NSManagedObjectID *)objectID inManagedObjectContext:(NSManagedObjectContext *)context
 {
+    
     return ![self.entityExclusionSet containsObject:objectID.entity.name];
 }
 
@@ -75,5 +77,63 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
         return [super requestForDeletedObject:deletedObject];
     }
 }
-//- req
+
+- (NSDictionary *)representationOfAttributes:(NSDictionary *)attributes ofManagedObject:(NSManagedObject *)managedObject
+{
+    NSMutableDictionary *mutableAttributes = (NSMutableDictionary *)[super representationOfAttributes:attributes ofManagedObject:managedObject];
+    return mutableAttributes;
+}
+
+- (BOOL)shouldFetchRemoteValuesForRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    return NO;
+}
+
+- (NSDictionary *)attributesForRepresentation:(NSDictionary *)representation ofEntity:(NSEntityDescription *)entity fromResponse:(NSHTTPURLResponse *)response
+{
+    NSMutableDictionary *muttableAttributes = [[super attributesForRepresentation:representation ofEntity:entity fromResponse:response] mutableCopy];
+    return muttableAttributes;
+}
+
+- (id)representationOrArrayOfRepresentationsOfEntity:(NSEntityDescription *)entity fromResponseObject:(id)responseObject
+{
+    id representation = [super representationOrArrayOfRepresentationsOfEntity:entity fromResponseObject:responseObject];
+    if ([self.entityExclusionSet containsObject:entity.name]) {
+        return nil;
+    }
+    return representation;
+}
+
+- (NSDictionary *)representationsForRelationshipsFromRepresentation:(NSDictionary *)representation ofEntity:(NSEntityDescription *)entity fromResponse:(NSHTTPURLResponse *)response
+{
+    /*
+    if ([entity.name isEqualToString:@"Book"]) {
+        NSMutableDictionary *mRepresentation = [[NSMutableDictionary alloc] init];
+        mRepresentation[@"authors"] = [NSMutableArray new];
+        for (NSString *name in [representation[@"author"] componentsSeparatedByString:@", "]) {
+            [mRepresentation[@"authors"] addObject:@{@"fullName": name}];
+        }
+        mRepresentation[@"categories"] = [NSMutableArray new];
+        for (NSString *name in [representation[@"categories"] componentsSeparatedByString:@", "]) {
+            [mRepresentation[@"categories"] addObject:@{@"name": name}];
+        }
+#warning Data curations necessary.  Publisher empty in first record.
+        mRepresentation[@"publisher"] = @{@"name": representation[@"publisher"] ? representation[@"publisher"] : @"PUBLISHER_NOT_FOUND"};
+        return mRepresentation;
+    } else {
+        return [super representationsForRelationshipsFromRepresentation:representation ofEntity:entity fromResponse:response];
+    }
+     */
+    return nil;
+}
+
+- (NSMutableURLRequest *)requestForFetchRequest:(NSFetchRequest *)fetchRequest withContext:(NSManagedObjectContext *)context
+{
+    if ([self.entityExclusionSet containsObject:fetchRequest.entityName]) {
+        return nil;
+    } else {
+        return [super requestForFetchRequest:fetchRequest withContext:context];
+    }
+}
+
 @end

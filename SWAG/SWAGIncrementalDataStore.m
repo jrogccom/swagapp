@@ -9,6 +9,7 @@
 #import "SWAGIncrementalDataStore.h"
 #import <AFIncrementalStore/AFIncrementalStore.h>
 #import <AFIncrementalStore/AFRESTClient.h>
+#import "SWAGRESTClient.h"
 
 @implementation SWAGIncrementalDataStore
 
@@ -25,8 +26,7 @@
 }
 
 - (id <AFIncrementalStoreHTTPClient>)HTTPClient {
-#warning method incomplete
-    return nil;
+    return [SWAGRESTClient sharedClient];
 }
 
 @end
