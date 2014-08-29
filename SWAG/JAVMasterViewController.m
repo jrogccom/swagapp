@@ -9,31 +9,55 @@
 #import "JAVMasterViewController.h"
 #import "JAVDetailViewController.h"
 #import "JAVAddBookViewController.h"
+#import "JAVAppDelegate.h"
+#import "Book.h"
+
 @import CoreData;
 
 @interface JAVMasterViewController () {
     NSMutableArray *_objects;
 }
 @property (weak, nonatomic) NSManagedObjectModel *model;
+@property (weak, nonatomic) NSManagedObjectContext *context;
 @end
 
 @implementation JAVMasterViewController
 
-/*- (NSManagedObjectModel *)model
+- (NSManagedObjectModel *)model
 {
     if (!_model) {
-        _model = [[UIApplication sharedApplication].delegate model];
+        _model = [ (JAVAppDelegate *)[UIApplication sharedApplication].delegate managedObjectModel];
     }
     return _model;
-}*/
+}
+
+- (NSManagedObjectContext *)context
+{
+    if (!_context) {
+        _context = [(JAVAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
+    }
+    return _context;
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
 }
 
+- (void)fetchBooks
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
+    NSError *err;
+    _objects = [[self.context executeFetchRequest:request error:&err] mutableCopy];
+    if (err) {
+        [NSException raise:@"Results not fetched." format:@"Error: %@", err.localizedDescription];
+    }
+    [self.tableView reloadData];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self fetchBooks];
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
@@ -73,8 +97,9 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    Book *book = _objects[indexPath.row];
+    cell.textLabel.text = book.title;
+    cell.detailTextLabel.text = book.authorsList;
     return cell;
 }
 

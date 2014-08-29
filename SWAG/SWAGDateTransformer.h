@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SWAGDateValueTransformer : NSValueTransformer
+@interface SWAGDateTransformer : NSValueTransformer
+
+@property (readonly, weak) NSDateFormatter *df;
 
 @end

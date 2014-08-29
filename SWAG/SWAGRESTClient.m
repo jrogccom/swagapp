@@ -45,95 +45,33 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
 
 #pragma - AFIncrementalClient protocol
 
-- (BOOL)shouldFetchRemoteAttributeValuesForObjectWithID:(NSManagedObjectID *)objectID inManagedObjectContext:(NSManagedObjectContext *)context
-{
-    
-    return ![self.entityExclusionSet containsObject:objectID.entity.name];
-}
-
-- (NSMutableURLRequest *)requestForInsertedObject:(NSManagedObject *)insertedObject
-{
-    if ([self.entityExclusionSet containsObject:insertedObject.entity.name]) {
-        return nil;
-    } else {
-        return [super requestForInsertedObject:insertedObject];
-    }
-}
-
-- (NSMutableURLRequest *)requestForUpdatedObject:(NSManagedObject *)updatedObject
-{
-    if ([self.entityExclusionSet containsObject:updatedObject.entity.name]) {
-        return nil;
-    } else {
-        return [super requestForUpdatedObject:updatedObject];
-    }
-}
-
-- (NSMutableURLRequest *)requestForDeletedObject:(NSManagedObject *)deletedObject
-{
-    if ([self.entityExclusionSet containsObject:deletedObject.entity.name]) {
-        return nil;
-    } else {
-        return [super requestForDeletedObject:deletedObject];
-    }
-}
 
 - (NSDictionary *)representationOfAttributes:(NSDictionary *)attributes ofManagedObject:(NSManagedObject *)managedObject
 {
-    NSMutableDictionary *mutableAttributes = (NSMutableDictionary *)[super representationOfAttributes:attributes ofManagedObject:managedObject];
+    NSMutableDictionary *mutableAttributes = [attributes mutableCopy];
+    NSDictionary *transformedKeysDict = @{@"authorsList": @"author", @"categoriesList": @"categories", @"publisherName": @"publisher"};
+    [transformedKeysDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (mutableAttributes[key]) {
+            mutableAttributes[obj] = mutableAttributes[key];
+            [mutableAttributes removeObjectForKey:key];
+        }
+    }];
+    
     return mutableAttributes;
 }
 
-- (BOOL)shouldFetchRemoteValuesForRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID inManagedObjectContext:(NSManagedObjectContext *)context
-{
-    return NO;
-}
 
 - (NSDictionary *)attributesForRepresentation:(NSDictionary *)representation ofEntity:(NSEntityDescription *)entity fromResponse:(NSHTTPURLResponse *)response
 {
-    NSMutableDictionary *muttableAttributes = [[super attributesForRepresentation:representation ofEntity:entity fromResponse:response] mutableCopy];
-    return muttableAttributes;
-}
-
-- (id)representationOrArrayOfRepresentationsOfEntity:(NSEntityDescription *)entity fromResponseObject:(id)responseObject
-{
-    id representation = [super representationOrArrayOfRepresentationsOfEntity:entity fromResponseObject:responseObject];
-    if ([self.entityExclusionSet containsObject:entity.name]) {
-        return nil;
-    }
-    return representation;
-}
-
-- (NSDictionary *)representationsForRelationshipsFromRepresentation:(NSDictionary *)representation ofEntity:(NSEntityDescription *)entity fromResponse:(NSHTTPURLResponse *)response
-{
-    /*
-    if ([entity.name isEqualToString:@"Book"]) {
-        NSMutableDictionary *mRepresentation = [[NSMutableDictionary alloc] init];
-        mRepresentation[@"authors"] = [NSMutableArray new];
-        for (NSString *name in [representation[@"author"] componentsSeparatedByString:@", "]) {
-            [mRepresentation[@"authors"] addObject:@{@"fullName": name}];
+    NSMutableDictionary *mutableAttributes = [representation mutableCopy];
+    NSDictionary *transformedKeysDict = @{@"author": @"authorsList", @"categories": @"categoriesList", @"publisher": @"publisherName"};
+    [transformedKeysDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (mutableAttributes[key]) {
+            mutableAttributes[obj] = mutableAttributes[key];
+            [mutableAttributes removeObjectForKey:key];
         }
-        mRepresentation[@"categories"] = [NSMutableArray new];
-        for (NSString *name in [representation[@"categories"] componentsSeparatedByString:@", "]) {
-            [mRepresentation[@"categories"] addObject:@{@"name": name}];
-        }
-#warning Data curations necessary.  Publisher empty in first record.
-        mRepresentation[@"publisher"] = @{@"name": representation[@"publisher"] ? representation[@"publisher"] : @"PUBLISHER_NOT_FOUND"};
-        return mRepresentation;
-    } else {
-        return [super representationsForRelationshipsFromRepresentation:representation ofEntity:entity fromResponse:response];
-    }
-     */
-    return nil;
-}
-
-- (NSMutableURLRequest *)requestForFetchRequest:(NSFetchRequest *)fetchRequest withContext:(NSManagedObjectContext *)context
-{
-    if ([self.entityExclusionSet containsObject:fetchRequest.entityName]) {
-        return nil;
-    } else {
-        return [super requestForFetchRequest:fetchRequest withContext:context];
-    }
+    }];
+    return mutableAttributes;
 }
 
 @end

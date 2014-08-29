@@ -27,9 +27,10 @@
 		BC04204019AACC6700B9D1BA /* SWAGTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC04203F19AACC6700B9D1BA /* SWAGTests.m */; };
 		BC04204B19AAEC4400B9D1BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */; };
 		BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */; };
+		BC350BD519B10A9C0028E28D /* SWAGDateTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC350BD419B10A9C0028E28D /* SWAGDateTransformer.m */; };
+		BC350BD819B1214A0028E28D /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BC350BD719B1214A0028E28D /* Book.m */; };
 		BC645A5819AD816600823B33 /* SWAGIncrementalDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = BC645A5719AD816600823B33 /* SWAGIncrementalDataStore.m */; };
 		BC645A5B19AD88A800823B33 /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC645A5919AD88A800823B33 /* Library.xcdatamodeld */; };
-		BC83E78C19AFB9CA00713BFC /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BC83E78B19AFB9CA00713BFC /* Book.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,12 +73,14 @@
 		BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BC04204C19AAED2B00B9D1BA /* JAVAddBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVAddBookViewController.h; sourceTree = "<group>"; };
 		BC04204D19AAED2B00B9D1BA /* JAVAddBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVAddBookViewController.m; sourceTree = "<group>"; };
+		BC350BD319B10A9C0028E28D /* SWAGDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAGDateTransformer.h; sourceTree = "<group>"; };
+		BC350BD419B10A9C0028E28D /* SWAGDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAGDateTransformer.m; sourceTree = "<group>"; };
+		BC350BD619B1214A0028E28D /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
+		BC350BD719B1214A0028E28D /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 		BC645A5619AD816600823B33 /* SWAGIncrementalDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAGIncrementalDataStore.h; sourceTree = "<group>"; };
 		BC645A5719AD816600823B33 /* SWAGIncrementalDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAGIncrementalDataStore.m; sourceTree = "<group>"; };
 		BC645A5A19AD88A800823B33 /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
 		BC78B90582A4416D8F804DFC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC83E78A19AFB9CA00713BFC /* Book.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Book.h; sourceTree = "<group>"; };
-		BC83E78B19AFB9CA00713BFC /* Book.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Book.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,13 +112,15 @@
 		05EA604719ABD40C00D1AB2E /* model */ = {
 			isa = PBXGroup;
 			children = (
+				BC350BD319B10A9C0028E28D /* SWAGDateTransformer.h */,
+				BC350BD419B10A9C0028E28D /* SWAGDateTransformer.m */,
 				05EA604819ABD44900D1AB2E /* JAVEntryItem.h */,
 				05EA604919ABD44900D1AB2E /* JAVEntryItem.m */,
 				BC645A5619AD816600823B33 /* SWAGIncrementalDataStore.h */,
 				BC645A5719AD816600823B33 /* SWAGIncrementalDataStore.m */,
 				BC645A5919AD88A800823B33 /* Library.xcdatamodeld */,
-				BC83E78A19AFB9CA00713BFC /* Book.h */,
-				BC83E78B19AFB9CA00713BFC /* Book.m */,
+				BC350BD619B1214A0028E28D /* Book.h */,
+				BC350BD719B1214A0028E28D /* Book.m */,
 				05EA60A119AE372000D1AB2E /* SWAGRESTClient.h */,
 				05EA60A219AE372000D1AB2E /* SWAGRESTClient.m */,
 			);
@@ -336,12 +341,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC83E78C19AFB9CA00713BFC /* Book.m in Sources */,
 				BC645A5819AD816600823B33 /* SWAGIncrementalDataStore.m in Sources */,
 				BC04202219AACC6700B9D1BA /* JAVAppDelegate.m in Sources */,
 				BC04204E19AAED2B00B9D1BA /* JAVAddBookViewController.m in Sources */,
 				BC04202819AACC6700B9D1BA /* JAVMasterViewController.m in Sources */,
+				BC350BD819B1214A0028E28D /* Book.m in Sources */,
 				05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */,
+				BC350BD519B10A9C0028E28D /* SWAGDateTransformer.m in Sources */,
 				BC04201E19AACC6700B9D1BA /* main.m in Sources */,
 				BC04202B19AACC6700B9D1BA /* JAVDetailViewController.m in Sources */,
 				05EA60A319AE372000D1AB2E /* SWAGRESTClient.m in Sources */,
