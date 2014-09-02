@@ -74,4 +74,11 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
     return mutableAttributes;
 }
 
+- (NSMutableURLRequest *)requestForInsertedObject:(NSManagedObject *)insertedObject
+{
+    NSMutableURLRequest *request = [super requestForInsertedObject:insertedObject];
+    request.URL = [request.URL URLByAppendingPathComponent:@"/"]; // POST /books not working as described.  POST /books/ works instead.
+    return request;
+}
+
 @end
