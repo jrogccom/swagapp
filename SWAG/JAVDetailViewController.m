@@ -8,6 +8,8 @@
 
 #import "JAVDetailViewController.h"
 #import "Book.h"
+@import Social;
+@import Accounts;
 
 @interface JAVDetailViewController ()
 {
@@ -18,6 +20,7 @@
 @property (strong, nonatomic) NSString *infoText;
 - (void)configureView;
 - (IBAction)checkoutButtonPressed:(id)sender;
+- (IBAction)shareButtonPressed:(id)sender;
 @end
 
 @implementation JAVDetailViewController
@@ -64,6 +67,11 @@
 - (IBAction)checkoutButtonPressed:(id)sender {
 }
 
+- (IBAction)shareButtonPressed:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Share to: " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", nil];
+    [actionSheet showInView:self.view];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -104,4 +112,28 @@
     return  _transactionInfo;
 }
 
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    // 0 for Facebook, 1 for Twitter
+    switch (buttonIndex) {
+        case 0:
+            [self presentViewForSocialServiceType:SLServiceTypeFacebook];
+            break;
+        case 1:
+            [self presentViewForSocialServiceType:SLServiceTypeTwitter];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)presentViewForSocialServiceType:(NSString *)serviceType
+{
+    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
+        SLComposeViewController *slcvViewController = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+        [self presentViewController:slcvViewController animated:YES completion:nil];
+    }
+}
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Book;
-@interface JAVDetailViewController : UIViewController
+@interface JAVDetailViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) Book *book;
 @property (strong, nonatomic) NSMutableDictionary *transactionInfo;
