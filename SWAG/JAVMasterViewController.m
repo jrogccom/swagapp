@@ -70,7 +70,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self fetchBooks];
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
@@ -78,6 +77,12 @@
     //self.navigationItem.rightBarButtonItem = addButton;
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear: ran");
+    [self fetchBooks];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
