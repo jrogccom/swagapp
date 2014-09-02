@@ -16,9 +16,11 @@
 
 @interface JAVMasterViewController () {
     NSMutableArray *_objects;
+    BOOL _editingModeOn;
 }
 @property (weak, nonatomic) NSManagedObjectModel *model;
 @property (weak, nonatomic) NSManagedObjectContext *context;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation JAVMasterViewController
@@ -44,6 +46,17 @@
     [super awakeFromNib];
 }
 
+- (void)toggleEditingMode
+{
+    _editingModeOn = _editingModeOn ? NO : YES;
+    [self.tableView setEditing:_editingModeOn animated:YES];
+    
+}
+
+- (IBAction)editButtonPressed:(id)sender
+{
+    [self toggleEditingMode];
+}
 - (void)fetchBooks
 {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
@@ -112,8 +125,12 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Book *book = _objects[indexPath.row];
         [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.context deleteObject:book];
+        [self saveContext];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
@@ -139,13 +156,44 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+        Book *object = _objects[indexPath.row];
+        [[segue destinationViewController] setBook:object];
     }
 }
 
+- (void)insertNewBookWithAttributes:(NSDictionary *)attributes
+{
+    Book *newBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.context];
+    [newBook.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (attributes[key]) {
+            [newBook setValue:attributes[key] forKey:key];
+        }
+    }];
+    [_objects addObject:newBook];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_objects.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 - (IBAction)unwoundFromAddItem:(UIStoryboardSegue *)segueBack
 {
+    JAVAddBookViewController *addVC = segueBack.sourceViewController;
+    if (addVC.collectedData) {
+        [self insertNewBookWithAttributes:addVC.collectedData];
+        NSError *err;
+        [self saveContext];
+        if (err) {
+            [NSException raise:@"Insertion failed" format:@"Error: %@", err.localizedDescription];
+        }
+    }
     
 }
+
+- (BOOL)saveContext
+{
+    NSError *err;
+    BOOL success = [self.context save:&err];
+    if (!success) {
+      [NSException raise:@"Saving failed." format:@"Error: %@", err.localizedDescription];
+    }
+    return success;
+}
+
 @end

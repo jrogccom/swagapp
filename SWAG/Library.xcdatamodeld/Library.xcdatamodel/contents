@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Book" representedClassName="Book" syncable="YES">
-        <attribute name="authorsList" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="categoriesList" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authorsList" attributeType="String" syncable="YES"/>
+        <attribute name="categoriesList" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="lastCheckedOut" optional="YES" attributeType="Transformable" valueTransformerName="SWAGDateTransformer" syncable="YES"/>
         <attribute name="lastCheckedOutBy" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,6 +14,6 @@
         </fetchedProperty>
     </entity>
     <elements>
-        <element name="Book" positionX="0" positionY="0" width="128" height="191"/>
+        <element name="Book" positionX="0" positionY="0" width="128" height="194"/>
     </elements>
 </model>

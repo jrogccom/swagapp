@@ -88,16 +88,13 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
 - (NSDictionary *)collectedData
 {
     if (_addingEntry) {
-    NSArray *authors = [_authorsTextField.text componentsSeparatedByString:@","].copy;
-    [authors makeObjectsPerformSelector:@selector(stringByTrimmingCharactersInSet:) withObject:[NSCharacterSet whitespaceCharacterSet]];
-    
-    NSArray *categories = [_categoriesTextField.text componentsSeparatedByString:@","].copy;
-    [categories makeObjectsPerformSelector:@selector(stringByTrimmingCharactersInSet:) withObject:[NSCharacterSet whitespaceCharacterSet]];
     
     NSString *title = _bookTitleTextField.text.copy;
-    NSString *publisher = _publisherTextField.text.copy;
+    NSString *publisherName = _publisherTextField.text.copy;
+    NSString *categoriesList = _categoriesTextField.text.copy;
+    NSString *authorsList = _authorsTextField.text.copy;
     
-    return @{@"title": title, @"authors": authors, @"categories": categories, @"publisher": publisher};
+    return @{@"title": title, @"authorsList": authorsList, @"categoriesList": categoriesList, @"publisherName": publisherName};
     } else {
         return nil;
     }

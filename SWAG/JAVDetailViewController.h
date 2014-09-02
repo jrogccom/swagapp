@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Book;
 @interface JAVDetailViewController : UIViewController
 
-@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Book *book;
 
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

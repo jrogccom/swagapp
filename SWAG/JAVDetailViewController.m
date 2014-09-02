@@ -7,10 +7,12 @@
 //
 
 #import "JAVDetailViewController.h"
+#import "Book.h"
 
 @interface JAVDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *bookInfoTextView;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
+@property (strong, nonatomic) NSString *infoText;
 - (void)configureView;
 - (IBAction)checkoutButtonPressed:(id)sender;
 @end
@@ -19,10 +21,10 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setBook:(Book *)newDetailItem
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+    if (_book != newDetailItem) {
+        _book = newDetailItem;
         
         // Update the view.
         [self configureView];
@@ -33,11 +35,29 @@
 {
     // Update the user interface for the detail item.
 
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+    if (self.book) {
+        self.detailDescriptionLabel.text = [self.book description];
+        [self setInfoTextFromBook:self.book];
+        self.bookInfoTextView.text = self.infoText;
     }
 }
 
+- (void)setInfoTextFromBook:(Book *)book
+{
+    NSString *infoText = [NSString stringWithFormat:
+                          @"%@\n"
+                          "%@\n"
+                          "Publisher: %@\n"
+                          "Tags: %@\n"
+                          "Last Checked Out:\n%@",
+                          book.title,
+                          book.authorsList,
+                          book.publisherName,
+                          book.categoriesList,
+                          book.lastCheckedOut ? [NSString stringWithFormat:@"%@ @ %@", book.lastCheckedOutBy, book.lastCheckedOut] : @"Check me out!."
+                          ];
+    self.infoText = infoText;
+}
 - (IBAction)checkoutButtonPressed:(id)sender {
 }
 
