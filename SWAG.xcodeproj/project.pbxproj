@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		05EA604A19ABD44900D1AB2E /* JAVEntryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EA604919ABD44900D1AB2E /* JAVEntryItem.m */; };
 		05EA60A319AE372000D1AB2E /* SWAGRESTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 05EA60A219AE372000D1AB2E /* SWAGRESTClient.m */; };
+		05FEBBAB19B65CE900107A2A /* JAVConfirmCheckoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FEBBA919B65CE900107A2A /* JAVConfirmCheckoutViewController.m */; };
+		05FEBBAC19B65CE900107A2A /* JAVConfirmCheckoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FEBBA919B65CE900107A2A /* JAVConfirmCheckoutViewController.m */; };
 		61C8DA214FD044F8AD3092FA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78B90582A4416D8F804DFC /* libPods.a */; };
 		BC04201219AACC6700B9D1BA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201119AACC6700B9D1BA /* Foundation.framework */; };
 		BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC04201319AACC6700B9D1BA /* CoreGraphics.framework */; };
@@ -48,6 +50,8 @@
 		05EA604919ABD44900D1AB2E /* JAVEntryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVEntryItem.m; sourceTree = "<group>"; };
 		05EA60A119AE372000D1AB2E /* SWAGRESTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAGRESTClient.h; sourceTree = "<group>"; };
 		05EA60A219AE372000D1AB2E /* SWAGRESTClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAGRESTClient.m; sourceTree = "<group>"; };
+		05FEBBA919B65CE900107A2A /* JAVConfirmCheckoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JAVConfirmCheckoutViewController.m; sourceTree = "<group>"; };
+		05FEBBAA19B65CE900107A2A /* JAVConfirmCheckoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JAVConfirmCheckoutViewController.h; sourceTree = "<group>"; };
 		0B30FA698F534C17B3377DF7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		BC04200E19AACC6700B9D1BA /* SWAG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWAG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC04201119AACC6700B9D1BA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -169,6 +173,8 @@
 				BC04202319AACC6700B9D1BA /* Main.storyboard */,
 				BC04202619AACC6700B9D1BA /* JAVMasterViewController.h */,
 				BC04202719AACC6700B9D1BA /* JAVMasterViewController.m */,
+				05FEBBA919B65CE900107A2A /* JAVConfirmCheckoutViewController.m */,
+				05FEBBAA19B65CE900107A2A /* JAVConfirmCheckoutViewController.h */,
 				BC04202919AACC6700B9D1BA /* JAVDetailViewController.h */,
 				BC04202A19AACC6700B9D1BA /* JAVDetailViewController.m */,
 				BC04204C19AAED2B00B9D1BA /* JAVAddBookViewController.h */,
@@ -258,6 +264,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = JavHimself;
 				TargetAttributes = {
+					BC04200D19AACC6700B9D1BA = {
+						DevelopmentTeam = 3E6BQ2LVL2;
+					};
 					BC04203119AACC6700B9D1BA = {
 						TestTargetID = BC04200D19AACC6700B9D1BA;
 					};
@@ -350,6 +359,7 @@
 				BC350BD519B10A9C0028E28D /* SWAGDateTransformer.m in Sources */,
 				BC04201E19AACC6700B9D1BA /* main.m in Sources */,
 				BC04202B19AACC6700B9D1BA /* JAVDetailViewController.m in Sources */,
+				05FEBBAB19B65CE900107A2A /* JAVConfirmCheckoutViewController.m in Sources */,
 				05EA60A319AE372000D1AB2E /* SWAGRESTClient.m in Sources */,
 				BC645A5B19AD88A800823B33 /* Library.xcdatamodeld in Sources */,
 			);
@@ -360,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC04204019AACC6700B9D1BA /* SWAGTests.m in Sources */,
+				05FEBBAC19B65CE900107A2A /* JAVConfirmCheckoutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,10 +488,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SWAG/SWAG-Prefix.pch";
 				INFOPLIST_FILE = "SWAG/SWAG-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -491,10 +505,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SWAG/SWAG-Prefix.pch";
 				INFOPLIST_FILE = "SWAG/SWAG-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
