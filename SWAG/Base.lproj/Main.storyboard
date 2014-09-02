@@ -148,7 +148,7 @@
                         <outlet property="categoriesTextField" destination="Zp9-qx-vO3" id="fLf-iT-MJw"/>
                         <outlet property="publisherTextField" destination="K4I-tp-SrY" id="izP-4z-7ar"/>
                         <outlet property="scrollView" destination="Be6-dF-Gdx" id="wVC-NY-sEo"/>
-                        <segue destination="SzI-yL-Otn" kind="unwind" identifier="backToMaster" unwindAction="unwoundFromAddItem:" id="w4q-s8-qQc"/>
+                        <segue destination="SzI-yL-Otn" kind="unwind" identifier="backToMaster" unwindAction="unwindFromAddItem:" id="Y5f-Yd-ip1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgJ-aG-DYe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -202,6 +202,7 @@
                                         </state>
                                         <connections>
                                             <action selector="checkoutButtonPressed:" destination="Ah7-4n-0Wa" eventType="touchUpInside" id="GJa-7K-ANI"/>
+                                            <segue destination="cBb-Lv-EUo" kind="modal" identifier="checkout" id="B8c-Du-rEs"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -213,11 +214,87 @@
                     <connections>
                         <outlet property="bookInfoTextView" destination="T7v-dD-hHI" id="WI0-6g-QnN"/>
                         <outlet property="notesTextView" destination="akP-Oo-qYB" id="3Fk-sK-VWy"/>
+                        <segue destination="h3u-yE-NaX" kind="unwind" identifier="backToMaster" unwindAction="unwindFromDetail:" id="Tz9-dP-Png"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lrm-kH-fPn" sceneMemberID="firstResponder"/>
+                <exit id="h3u-yE-NaX" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="897" y="399"/>
+        </scene>
+        <!--Confirm Checkout View Controller-->
+        <scene sceneID="MHS-Ct-29j">
+            <objects>
+                <viewController id="cBb-Lv-EUo" customClass="JAVConfirmCheckoutViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7Xv-kK-hN3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z9H-BT-Rp9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sLG-s7-fek">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f76-SA-dAa">
+                                <rect key="frame" x="20" y="98" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3j-IH-ZDk">
+                                <rect key="frame" x="20" y="187" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RLD-w7-LSc">
+                                <rect key="frame" x="117" y="69" width="86" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19b-tA-VoR">
+                                <rect key="frame" x="118" y="153" width="85" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uiz-xu-79Z">
+                                <rect key="frame" x="98" y="253" width="125" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Confirm Checkout">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmButtonPressed:" destination="cBb-Lv-EUo" eventType="touchUpInside" id="QVA-XH-OKD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9e-Si-uSn">
+                                <rect key="frame" x="101" y="291" width="118" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Cancel Checkout">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="cBb-Lv-EUo" eventType="touchUpInside" id="x8x-6k-6OW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="uiz-xu-79Z" secondAttribute="trailing" constant="97" id="hBS-HN-S0Z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="firstNameTextField" destination="f76-SA-dAa" id="3GB-0g-mOa"/>
+                        <outlet property="lastNameTextField" destination="e3j-IH-ZDk" id="4og-Ao-XCJ"/>
+                        <segue destination="ck2-xu-g4j" kind="unwind" identifier="backToDetail" unwindAction="confirmCheckoutControllerDone:" id="e9g-VD-neL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T3H-WJ-cCE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ck2-xu-g4j" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1492" y="480"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

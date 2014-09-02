@@ -12,6 +12,6 @@
 @interface JAVDetailViewController : UIViewController
 
 @property (strong, nonatomic) Book *book;
-
+@property (strong, nonatomic) NSMutableDictionary *transactionInfo;
 @property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

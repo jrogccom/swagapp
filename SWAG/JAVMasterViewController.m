@@ -172,7 +172,7 @@
     [_objects addObject:newBook];
     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_objects.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
-- (IBAction)unwoundFromAddItem:(UIStoryboardSegue *)segueBack
+- (IBAction)unwindFromAddItem:(UIStoryboardSegue *)segueBack
 {
     JAVAddBookViewController *addVC = segueBack.sourceViewController;
     if (addVC.collectedData) {
@@ -186,6 +186,23 @@
     
 }
 
+- (void)checkoutBook:(Book *)book withCheckoutInfo:(NSDictionary *)checkoutInfo
+{
+    NSString *checkoutName = [NSString stringWithFormat:@"%@, %@", checkoutInfo[@"lastName"], checkoutInfo[@"firstName"]];
+    book.lastCheckedOutBy = checkoutName;
+    book.lastCheckedOut = [NSDate date];
+    [self saveContext];
+}
+
+- (IBAction)unwindFromDetail:(UIStoryboardSegue *)segueBack
+{
+    NSDictionary *transactionInfo = [segueBack.sourceViewController valueForKey:@"transactionInfo"];
+    Book *book = transactionInfo[@"book"];
+    if (transactionInfo[@"checkoutInfo"]) {
+        [self checkoutBook:book withCheckoutInfo:transactionInfo[@"checkoutInfo"]];
+    }
+}
+
 - (BOOL)saveContext
 {
     NSError *err;
@@ -195,5 +212,7 @@
     }
     return success;
 }
+
+
 
 @end

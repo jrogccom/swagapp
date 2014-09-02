@@ -10,6 +10,9 @@
 #import "Book.h"
 
 @interface JAVDetailViewController ()
+{
+    BOOL _checkoutDidOccur;
+}
 @property (weak, nonatomic) IBOutlet UITextView *bookInfoTextView;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (strong, nonatomic) NSString *infoText;
@@ -68,10 +71,37 @@
     [self configureView];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_checkoutDidOccur) {
+        [self performSegueWithIdentifier:@"backToMaster" sender:nil];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (IBAction)confirmCheckoutControllerDone:(UIStoryboardSegue *)segueBack
+{
+    NSDictionary *checkoutInfo = [segueBack.sourceViewController valueForKey:@"checkoutInfoDict"];
+    if (checkoutInfo) {
+        self.transactionInfo[@"checkoutInfo"] = checkoutInfo;
+        _checkoutDidOccur = YES;
+        //[self performSegueWithIdentifier:@"backToMaster" sender:nil];
+    }
+}
+
+- (NSMutableDictionary *)transactionInfo
+{
+    if (!_transactionInfo) {
+        _transactionInfo = [[NSMutableDictionary alloc] init];
+        _transactionInfo[@"book"] = self.book;
+    }
+    return  _transactionInfo;
 }
 
 @end
