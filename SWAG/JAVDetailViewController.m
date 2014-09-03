@@ -133,9 +133,7 @@
 
 - (void)presentViewForSocialServiceType:(NSString *)serviceType
 {
-    if ([SLComposeViewController isAvailableForServiceType:serviceType]) {
-        SLComposeViewController *slcvViewController = [SLComposeViewController composeViewControllerForServiceType:serviceType];
-        [self presentViewController:slcvViewController animated:YES completion:nil];
-    }
+    SLComposeViewController *slcvViewController = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+    [self presentViewController:slcvViewController animated:YES completion:nil];
 }
 @end
