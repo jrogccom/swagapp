@@ -15,6 +15,7 @@
 {
     BOOL _checkoutDidOccur;
 }
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UITextView *bookInfoTextView;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (strong, nonatomic) NSString *infoText;
@@ -75,6 +76,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }

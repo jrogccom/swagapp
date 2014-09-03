@@ -48,7 +48,12 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self registerForKeyboardNotifications];
     // Do any additional setup after loading the view.
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -125,6 +130,30 @@ typedef NS_ENUM(NSInteger, JAVButtonTag)
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+}
+
+#pragma mark - keyboard
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:nil];
+    
+    /*[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification object:nil];*/
+}
+
+- (void)keyboardWillShow:(NSNotification *)aNotification
+{
+    CGRect kbFrame = [self.scrollView.superview convertRect:[(NSValue *)aNotification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue] fromView:self.view.window];
+    if (CGRectGetMinY(kbFrame) < CGRectGetMaxY(self.scrollView.frame)) {
+        [self.scrollView setFrame:CGRectMake(self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, CGRectGetMinY(kbFrame) - CGRectGetMinY(self.scrollView.frame))];
+        self.scrollView.scrollEnabled = YES;
+    }
+    
+    
 }
 
 
