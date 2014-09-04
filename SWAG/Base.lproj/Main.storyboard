@@ -66,7 +66,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Master" id="rxm-i5-diM">
+                    <navigationItem key="navigationItem" title="Your Books" id="rxm-i5-diM">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="sZ5-aa-usr">
                             <connections>
                                 <action selector="editButtonPressed:" destination="pGg-6v-bdr" id="eSw-sX-66E"/>
@@ -92,7 +92,7 @@
             </objects>
             <point key="canvasLocation" x="431" y="86"/>
         </scene>
-        <!--Add Book View Controller-->
+        <!--Add Book View Controller - Adding New Book-->
         <scene sceneID="FDe-IV-HZJ">
             <objects>
                 <viewController id="ro2-8J-hJO" customClass="JAVAddBookViewController" sceneMemberID="viewController">
@@ -160,7 +160,7 @@
                             <constraint firstItem="Be6-dF-Gdx" firstAttribute="leading" secondItem="kjd-2l-zp6" secondAttribute="leading" id="gX1-wG-cbO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="POD-5U-W6o">
+                    <navigationItem key="navigationItem" title="Adding New Book" id="POD-5U-W6o">
                         <barButtonItem key="leftBarButtonItem" tag="1" style="done" systemItem="cancel" id="t7Z-hb-zPn">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="ro2-8J-hJO" id="WKZ-1S-J8R"/>
@@ -271,7 +271,7 @@
                             <constraint firstAttribute="bottom" secondItem="6px-DK-ZWu" secondAttribute="bottom" id="Y5G-Vq-cVz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="5oi-CU-6QG">
+                    <navigationItem key="navigationItem" title="Book Detail" id="5oi-CU-6QG">
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="B7T-gQ-p6x">
                             <connections>
                                 <action selector="shareButtonPressed:" destination="Ah7-4n-0Wa" id="YIB-YB-VX7"/>
