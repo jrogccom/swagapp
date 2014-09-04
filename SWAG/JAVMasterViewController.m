@@ -221,7 +221,7 @@
     NSString *checkoutName = [NSString stringWithFormat:@"%@, %@", checkoutInfo[@"lastName"], checkoutInfo[@"firstName"]];
     book.lastCheckedOutBy = checkoutName;
     book.lastCheckedOut = [NSDate date];
-    // [self saveContext];
+    [self saveContext];
 }
 
 - (IBAction)unwindFromDetail:(UIStoryboardSegue *)segueBack
@@ -276,10 +276,17 @@
     }
 }
 
-- (IBAction)longPressOnTableView:(id)sender
+- (IBAction)longPressOnTableView:(UILongPressGestureRecognizer *)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
-    [alertView show];
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan:{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+            [alertView show];
+        } break;
+        default:
+            break;
+    }
+    
 }
 
 #pragma mark - UIAlertviewDelegate
@@ -289,10 +296,11 @@
     if (buttonIndex == alertView.cancelButtonIndex) {
         
     } else if (buttonIndex == alertView.firstOtherButtonIndex) {
-        [SWAGIncrementalDataStore cleanLibraryWithCompletionBlock:^(BOOL success, NSDictionary *info) {
-            if (success) [self.fetchedResultsController performFetch:nil];
-        }];
-    } else {
+        for (Book *book in self.fetchedResultsController.fetchedObjects) {
+            [self.fetchedResultsController.managedObjectContext deleteObject:book];
+        }
+        [self saveContext];
+    }else {
     
     }
 }

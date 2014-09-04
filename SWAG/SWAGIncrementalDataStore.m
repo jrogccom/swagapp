@@ -34,7 +34,7 @@
     [[SWAGRESTClient sharedClient] deletePath:@"clean" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"DELETE /clean succeeded");
         if (completionBlock) {
-            completionBlock(YES, @{@"responseObject": responseObject});
+            completionBlock(YES, responseObject ? @{@"responseObject": responseObject} : nil);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completionBlock) {
