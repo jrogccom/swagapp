@@ -29,4 +29,19 @@
     return [SWAGRESTClient sharedClient];
 }
 
++(void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock
+{
+    [[SWAGRESTClient sharedClient] deletePath:@"clean" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"DELETE /clean succeeded");
+        if (completionBlock) {
+            completionBlock(YES, @{@"responseObject": responseObject});
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completionBlock) {
+            completionBlock(NO, @{@"error": error});
+        } else {
+            [NSException raise:@"Clean failed" format:@"Operation: %@, Error: %@", operation, error];
+        }
+    }];
+}
 @end

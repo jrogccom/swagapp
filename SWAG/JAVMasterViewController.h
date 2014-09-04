@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@import CoreData;
 
-@interface JAVMasterViewController : UITableViewController
+@interface JAVMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, UIAlertViewDelegate>
 
 @end

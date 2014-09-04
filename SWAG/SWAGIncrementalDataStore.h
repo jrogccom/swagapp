@@ -9,5 +9,5 @@
 #import "AFIncrementalStore.h"
 
 @interface SWAGIncrementalDataStore : AFIncrementalStore
-
++(void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock;
 @end

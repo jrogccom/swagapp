@@ -11,8 +11,9 @@
 #import "JAVAddBookViewController.h"
 #import "JAVAppDelegate.h"
 #import "Book.h"
+#import "SWAGIncrementalDataStore.h"
 
-@import CoreData;
+//@import CoreData;
 
 @interface JAVMasterViewController () {
     NSMutableArray *_objects;
@@ -21,9 +22,33 @@
 @property (weak, nonatomic) NSManagedObjectModel *model;
 @property (weak, nonatomic) NSManagedObjectContext *context;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+- (IBAction)longPressOnTableView:(id)sender;
 @end
 
 @implementation JAVMasterViewController
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+        request.sortDescriptors = @[sortDescriptor];
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+        self.fetchedResultsController.delegate = self;
+        //NSError *err;
+        //[self.fetchedResultsController performFetch:&err];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchRemoteValues:) name:AFIncrementalStoreContextDidFetchRemoteValues object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (NSManagedObjectModel *)model
 {
@@ -32,6 +57,7 @@
     }
     return _model;
 }
+
 
 - (NSManagedObjectContext *)context
 {
@@ -70,6 +96,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSError *err;
+    [self.fetchedResultsController performFetch:&err];
+    if (err) {
+        [NSException raise:@"Error fetching" format:@"Error: %@", err.localizedDescription];
+    }
 	// Do any additional setup after loading the view, typically from a nib.
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
@@ -108,14 +139,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return self.fetchedResultsController.fetchedObjects.count;
+    //return _objects.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
 
-    Book *book = _objects[indexPath.row];
+    Book *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = book.authorsList;
     return cell;
@@ -130,14 +162,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        Book *book = _objects[indexPath.row];
-        [_objects removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.context deleteObject:book];
+        Book *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self.fetchedResultsController.managedObjectContext deleteObject:book];
         [self saveContext];
         
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
 }
 
@@ -161,32 +189,29 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Book *object = _objects[indexPath.row];
+        Book *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [[segue destinationViewController] setBook:object];
     }
 }
 
 - (void)insertNewBookWithAttributes:(NSDictionary *)attributes
 {
-    Book *newBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.context];
+    Book *newBook = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:self.context] ;
     [newBook.entity.attributesByName enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if (attributes[key]) {
             [newBook setValue:attributes[key] forKey:key];
         }
     }];
-    [_objects addObject:newBook];
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_objects.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.fetchedResultsController.managedObjectContext insertObject:newBook];
+    [self saveContext];
+    //[_objects addObject:newBook];
+    //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_objects.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 - (IBAction)unwindFromAddItem:(UIStoryboardSegue *)segueBack
 {
     JAVAddBookViewController *addVC = segueBack.sourceViewController;
     if (addVC.collectedData) {
         [self insertNewBookWithAttributes:addVC.collectedData];
-        NSError *err;
-        [self saveContext];
-        if (err) {
-            [NSException raise:@"Insertion failed" format:@"Error: %@", err.localizedDescription];
-        }
     }
     
 }
@@ -196,7 +221,7 @@
     NSString *checkoutName = [NSString stringWithFormat:@"%@, %@", checkoutInfo[@"lastName"], checkoutInfo[@"firstName"]];
     book.lastCheckedOutBy = checkoutName;
     book.lastCheckedOut = [NSDate date];
-    [self saveContext];
+    // [self saveContext];
 }
 
 - (IBAction)unwindFromDetail:(UIStoryboardSegue *)segueBack
@@ -211,13 +236,64 @@
 - (BOOL)saveContext
 {
     NSError *err;
-    BOOL success = [self.context save:&err];
+    BOOL success = [self.fetchedResultsController.managedObjectContext save:&err];
     if (!success) {
       [NSException raise:@"Saving failed." format:@"Error: %@", err.localizedDescription];
     }
     return success;
 }
 
+#pragma mark - NSFetchedRequestController
 
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView reloadData];
+}
 
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - notifications
+
+- (void)didFetchRemoteValues:(NSNotification *)aNotification
+{
+    if (self.fetchedResultsController.fetchedObjects.count == 0) {
+        NSError *err;
+        [self.fetchedResultsController performFetch:&err];
+    } else {
+        [self.tableView reloadData];
+    }
+}
+
+- (IBAction)longPressOnTableView:(id)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+    [alertView show];
+}
+
+#pragma mark - UIAlertviewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {
+        
+    } else if (buttonIndex == alertView.firstOtherButtonIndex) {
+        [SWAGIncrementalDataStore cleanLibraryWithCompletionBlock:^(BOOL success, NSDictionary *info) {
+            if (success) [self.fetchedResultsController performFetch:nil];
+        }];
+    } else {
+    
+    }
+}
 @end
