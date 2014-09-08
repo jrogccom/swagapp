@@ -28,22 +28,14 @@
 
 @implementation JAVMasterViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+/*- (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-        request.sortDescriptors = @[sortDescriptor];
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
-        self.fetchedResultsController.delegate = self;
-        //NSError *err;
-        //[self.fetchedResultsController performFetch:&err];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchRemoteValues:) name:AFIncrementalStoreContextDidFetchRemoteValues object:nil];
     }
     return self;
-}
+}*/
+
 
 - (void)dealloc
 {
@@ -83,19 +75,21 @@
 {
     [self toggleEditingMode];
 }
-- (void)fetchBooks
-{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Book"];
-    NSError *err;
-    _objects = [[self.context executeFetchRequest:request error:&err] mutableCopy];
-    if (err) {
-        [NSException raise:@"Results not fetched." format:@"Error: %@", err.localizedDescription];
-    }
-    [self.tableView reloadData];
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    request.sortDescriptors = @[sortDescriptor];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultsController.delegate = self;
+    //NSError *err;
+    //[self.fetchedResultsController performFetch:&err];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchRemoteValues:) name:AFIncrementalStoreContextDidFetchRemoteValues object:nil];
+    
     NSError *err;
     [self.fetchedResultsController performFetch:&err];
     if (err) {
@@ -108,26 +102,10 @@
     //self.navigationItem.rightBarButtonItem = addButton;
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    NSLog(@"viewDidAppear: ran");
-    [self fetchBooks];
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)insertNewObject:(id)sender
-{
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
-    }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Table View
@@ -202,7 +180,7 @@
             [newBook setValue:attributes[key] forKey:key];
         }
     }];
-    [self.fetchedResultsController.managedObjectContext insertObject:newBook];
+    //[self.fetchedResultsController.managedObjectContext insertObject:newBook];
     [self saveContext];
     //[_objects addObject:newBook];
     //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:_objects.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -250,6 +228,7 @@
     [self.tableView reloadData];
 }
 
+/*
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
     switch (type) {
@@ -263,17 +242,19 @@
             break;
     }
 }
-
+*/
 #pragma mark - notifications
 
 - (void)didFetchRemoteValues:(NSNotification *)aNotification
 {
+    /*
     if (self.fetchedResultsController.fetchedObjects.count == 0) {
         NSError *err;
         [self.fetchedResultsController performFetch:&err];
     } else {
         [self.tableView reloadData];
     }
+     */
 }
 
 - (IBAction)longPressOnTableView:(UILongPressGestureRecognizer *)sender
