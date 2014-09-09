@@ -8,6 +8,7 @@
 
 #import "SWAGRESTClient.h"
 #import "Book.h"
+#import <TransformerKit/TTTDateTransformers.h>
 
 static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.com/53f4eb9b001f0f000704ea35/";
 
@@ -71,6 +72,9 @@ static NSString * const kBaseURLString = @"http://prolific-interview.herokuapp.c
             [mutableAttributes removeObjectForKey:key];
         }
     }];
+    if (mutableAttributes[@"lastCheckedOut"] && ![mutableAttributes[@"lastCheckedOut"] isEqual:[NSNull null]]) {
+        [mutableAttributes setValue:[[NSValueTransformer valueTransformerForName:TTTISO8601DateTransformerName] reverseTransformedValue:mutableAttributes[@"lastCheckedOut"]] forKey:@"lastCheckedOut"];
+    }
     return mutableAttributes;
 }
 
