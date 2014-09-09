@@ -33,6 +33,7 @@
 		BC350BD819B1214A0028E28D /* Book.m in Sources */ = {isa = PBXBuildFile; fileRef = BC350BD719B1214A0028E28D /* Book.m */; };
 		BC645A5819AD816600823B33 /* SWAGIncrementalDataStore.m in Sources */ = {isa = PBXBuildFile; fileRef = BC645A5719AD816600823B33 /* SWAGIncrementalDataStore.m */; };
 		BC645A5B19AD88A800823B33 /* Library.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC645A5919AD88A800823B33 /* Library.xcdatamodeld */; };
+		BC6E8C5E19BE6FC7008565C9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC6E8C5D19BE6FC7008565C9 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		BC645A5619AD816600823B33 /* SWAGIncrementalDataStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAGIncrementalDataStore.h; sourceTree = "<group>"; };
 		BC645A5719AD816600823B33 /* SWAGIncrementalDataStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAGIncrementalDataStore.m; sourceTree = "<group>"; };
 		BC645A5A19AD88A800823B33 /* Library.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Library.xcdatamodel; sourceTree = "<group>"; };
+		BC6E8C5D19BE6FC7008565C9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BC78B90582A4416D8F804DFC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC6E8C5E19BE6FC7008565C9 /* MobileCoreServices.framework in Frameworks */,
 				BC04204B19AAEC4400B9D1BA /* SystemConfiguration.framework in Frameworks */,
 				BC04201419AACC6700B9D1BA /* CoreGraphics.framework in Frameworks */,
 				BC04201619AACC6700B9D1BA /* UIKit.framework in Frameworks */,
@@ -154,6 +157,7 @@
 		BC04201019AACC6700B9D1BA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BC6E8C5D19BE6FC7008565C9 /* MobileCoreServices.framework */,
 				BC04204919AAEBCE00B9D1BA /* SystemConfiguration.framework */,
 				BC04201119AACC6700B9D1BA /* Foundation.framework */,
 				BC04201319AACC6700B9D1BA /* CoreGraphics.framework */,
