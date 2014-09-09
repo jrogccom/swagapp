@@ -21,7 +21,7 @@
     static NSDateFormatter *df = nil;
     dispatch_once(&pred, ^{
         df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     });
     return df;
 }

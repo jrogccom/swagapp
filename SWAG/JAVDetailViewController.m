@@ -61,7 +61,7 @@
                           book.authorsList,
                           book.publisherName,
                           book.categoriesList,
-                          book.lastCheckedOut ? [NSString stringWithFormat:@"%@ @ %@", book.lastCheckedOutBy, book.lastCheckedOut] : @"Check me out!."
+                          book.lastCheckedOut ? [NSString stringWithFormat:@"%@ @ %@", book.lastCheckedOutBy, book.lastCheckedOut] : @"Check me out!"
                           ];
     self.infoText = infoText;
 }

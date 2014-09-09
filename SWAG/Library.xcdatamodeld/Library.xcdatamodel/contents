@@ -4,7 +4,7 @@
         <attribute name="authorsList" attributeType="String" syncable="YES"/>
         <attribute name="categoriesList" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="lastCheckedOut" optional="YES" attributeType="Transformable" valueTransformerName="SWAGDateTransformer" syncable="YES"/>
+        <attribute name="lastCheckedOut" optional="YES" attributeType="Date" valueTransformerName="SWAGDateTransformer" syncable="YES"/>
         <attribute name="lastCheckedOutBy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publisherName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
