@@ -245,29 +245,32 @@
 */
 #pragma mark - notifications
 
-- (void)didFetchRemoteValues:(NSNotification *)aNotification
-{
-    /*
-    if (self.fetchedResultsController.fetchedObjects.count == 0) {
-        NSError *err;
-        [self.fetchedResultsController performFetch:&err];
-    } else {
-        [self.tableView reloadData];
-    }
-     */
-}
-
 - (IBAction)longPressOnTableView:(UILongPressGestureRecognizer *)sender
 {
     switch (sender.state) {
         case UIGestureRecognizerStateBegan:{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
-            [alertView show];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete library" otherButtonTitles:@"Reload library", nil];
+            [actionSheet showInView:self.view];
+            
         } break;
         default:
             break;
     }
     
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    // 0 for Facebook, 1 for Twitter
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+        [alertView show];
+    } else if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+        NSError *err;
+        [self.fetchedResultsController performFetch:&err];
+    } else {}
 }
 
 #pragma mark - UIAlertviewDelegate

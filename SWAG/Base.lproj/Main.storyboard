@@ -84,7 +84,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="2.0000000000000004" id="X8L-9w-75p">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="1" id="X8L-9w-75p">
                     <connections>
                         <action selector="longPressOnTableView:" destination="pGg-6v-bdr" id="rfB-j5-uFn"/>
                     </connections>
