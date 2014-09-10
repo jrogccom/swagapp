@@ -29,7 +29,7 @@
     return [SWAGRESTClient sharedClient];
 }
 
-+(void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock
++ (void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock
 {
     [[SWAGRESTClient sharedClient] deletePath:@"clean" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"DELETE /clean succeeded");
@@ -43,5 +43,9 @@
             [NSException raise:@"Clean failed" format:@"Operation: %@, Error: %@", operation, error];
         }
     }];
+}
++ (AFNetworkReachabilityStatus)reachabilityStatus
+{
+    return [[SWAGRESTClient sharedClient] networkReachabilityStatus];
 }
 @end

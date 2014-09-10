@@ -9,5 +9,6 @@
 #import "AFIncrementalStore.h"
 
 @interface SWAGIncrementalDataStore : AFIncrementalStore
-+(void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock;
++ (void)cleanLibraryWithCompletionBlock:(void (^)(BOOL success, NSDictionary *info))completionBlock;
++ (AFNetworkReachabilityStatus)reachabilityStatus;
 @end

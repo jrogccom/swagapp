@@ -15,15 +15,23 @@
 
 //@import CoreData;
 
+
+NS_ENUM(NSInteger, AlertViewTag) {
+    AlertViewDeleteRowsTag = 0,
+    AlertViewUnreachableWarningTag = 33
+};
+
 @interface JAVMasterViewController () {
     NSMutableArray *_objects;
     BOOL _editingModeOn;
 }
 @property (weak, nonatomic) NSManagedObjectModel *model;
 @property (weak, nonatomic) NSManagedObjectContext *context;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic, readonly) UITableView *tableView;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (readonly) AFNetworkReachabilityStatus reachabilityStatus;
 - (IBAction)longPressOnTableView:(id)sender;
+- (IBAction)refresh:(UIRefreshControl *)sender;
 @end
 
 @implementation JAVMasterViewController
@@ -42,6 +50,41 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    request.sortDescriptors = @[sortDescriptor];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
+    self.fetchedResultsController.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchRemoteValues:) name:AFIncrementalStoreContextDidFetchRemoteValues object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityStatusChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+    
+    NSError *err;
+    [self.fetchedResultsController performFetch:&err];
+    if (err) {
+        [NSException raise:@"Error fetching" format:@"Error: %@", err.localizedDescription];
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Core-Data-related methods
+
 - (NSManagedObjectModel *)model
 {
     if (!_model) {
@@ -50,6 +93,15 @@
     return _model;
 }
 
+- (BOOL)saveContext
+{
+    NSError *err;
+    BOOL success = [self.fetchedResultsController.managedObjectContext save:&err];
+    if (!success) {
+        [NSException raise:@"Saving failed." format:@"Error: %@", err.localizedDescription];
+    }
+    return success;
+}
 
 - (NSManagedObjectContext *)context
 {
@@ -59,9 +111,42 @@
     return _context;
 }
 
-- (void)awakeFromNib
+
+#pragma mark - Table View
+
+- (IBAction)refresh:(UIRefreshControl *)sender
 {
-    [super awakeFromNib];
+    if (self.reachabilityStatus != AFNetworkReachabilityStatusNotReachable && self.reachabilityStatus != AFNetworkReachabilityStatusUnknown)
+    {
+        NSError *err;
+        [self.fetchedResultsController performFetch:&err];
+    } else
+    {
+        [sender endRefreshing];
+        [self presentUnreachabilityStatusAlertView];
+    }
+    
+}
+
+
+- (IBAction)longPressOnTableView:(UILongPressGestureRecognizer *)sender
+{
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan:{
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete library" otherButtonTitles:@"Reload library", nil];
+            [actionSheet showInView:self.view];
+            
+        } break;
+        default:
+            break;
+    }
+    
+}
+
+
+- (UITableView *)tableView
+{
+    return (UITableView *)self.view;
 }
 
 - (void)toggleEditingMode
@@ -76,39 +161,6 @@
     [self toggleEditingMode];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
-    request.sortDescriptors = @[sortDescriptor];
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil];
-    self.fetchedResultsController.delegate = self;
-    //NSError *err;
-    //[self.fetchedResultsController performFetch:&err];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFetchRemoteValues:) name:AFIncrementalStoreContextDidFetchRemoteValues object:nil];
-    
-    NSError *err;
-    [self.fetchedResultsController performFetch:&err];
-    if (err) {
-        [NSException raise:@"Error fetching" format:@"Error: %@", err.localizedDescription];
-    }
-	// Do any additional setup after loading the view, typically from a nib.
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    //UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    //self.navigationItem.rightBarButtonItem = addButton;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table View
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -162,6 +214,7 @@
     return YES;
 }
 */
+#pragma mark - Segue-related methods
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -211,15 +264,7 @@
     }
 }
 
-- (BOOL)saveContext
-{
-    NSError *err;
-    BOOL success = [self.fetchedResultsController.managedObjectContext save:&err];
-    if (!success) {
-      [NSException raise:@"Saving failed." format:@"Error: %@", err.localizedDescription];
-    }
-    return success;
-}
+
 
 #pragma mark - NSFetchedRequestController
 
@@ -243,21 +288,9 @@
     }
 }
 */
-#pragma mark - notifications
 
-- (IBAction)longPressOnTableView:(UILongPressGestureRecognizer *)sender
-{
-    switch (sender.state) {
-        case UIGestureRecognizerStateBegan:{
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete library" otherButtonTitles:@"Reload library", nil];
-            [actionSheet showInView:self.view];
-            
-        } break;
-        default:
-            break;
-    }
-    
-}
+
+
 
 #pragma mark - UIActionSheetDelegate
 
@@ -266,6 +299,7 @@
     // 0 for Facebook, 1 for Twitter
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Delete all rows" message:@"Do you want to empty out your library?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Delete", nil];
+        alertView.tag = AlertViewDeleteRowsTag;
         [alertView show];
     } else if (buttonIndex == actionSheet.firstOtherButtonIndex) {
         NSError *err;
@@ -277,15 +311,61 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertView.cancelButtonIndex) {
-        
-    } else if (buttonIndex == alertView.firstOtherButtonIndex) {
-        for (Book *book in self.fetchedResultsController.fetchedObjects) {
-            [self.fetchedResultsController.managedObjectContext deleteObject:book];
-        }
-        [self saveContext];
-    }else {
-    
+    switch (alertView.tag) {
+        case AlertViewDeleteRowsTag:
+                if (buttonIndex == alertView.cancelButtonIndex) {
+                    
+                } else if (buttonIndex == alertView.firstOtherButtonIndex) {
+                    for (Book *book in self.fetchedResultsController.fetchedObjects) {
+                        [self.fetchedResultsController.managedObjectContext deleteObject:book];
+                    }
+                    [self saveContext];
+                }else {
+                    
+                }
+            break;
+        case AlertViewUnreachableWarningTag:
+            break;
+        default:
+            break;
     }
+    
+}
+
+#pragma mark - Notifications
+
+- (void)didFetchRemoteValues:(NSNotification *)aNotification
+{
+    [self.refreshControl endRefreshing];
+    
+}
+
+- (void)reachabilityStatusChanged:(NSNotification *)aNotification
+{
+    AFNetworkReachabilityStatus status = [aNotification.userInfo[AFNetworkingReachabilityNotificationStatusItem] integerValue];
+    switch (status) {
+        case AFNetworkReachabilityStatusUnknown:
+            [self presentUnreachabilityStatusAlertView];
+            break;
+        case AFNetworkReachabilityStatusNotReachable:
+            [self presentUnreachabilityStatusAlertView];
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Misc
+
+- (void)presentUnreachabilityStatusAlertView
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Network not reachable" message:@"Verify in your settings that the network is enabled and that internet access is available." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+    alertView.tag = AlertViewUnreachableWarningTag;
+    [alertView show];
+}
+
+- (AFNetworkReachabilityStatus)reachabilityStatus
+{
+    return [SWAGIncrementalDataStore reachabilityStatus];
 }
 @end
