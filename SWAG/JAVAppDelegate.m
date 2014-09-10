@@ -85,15 +85,15 @@
     
     AFIncrementalStore *incrementalStore = (AFIncrementalStore *)[_persistentStoreCoordinator addPersistentStoreWithType:[SWAGIncrementalDataStore type] configuration:nil URL:nil options:nil error:nil];
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:STORE_URL_PATH_COMP];
+    // NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:STORE_URL_PATH_COMP];
     
     NSError *error = nil;
-    if (![incrementalStore.backingPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![incrementalStore.backingPersistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
-    NSLog(@"SQLite URL: %@", [[self applicationDocumentsDirectory] URLByAppendingPathComponent:STORE_URL_PATH_COMP]);
+    // NSLog(@"SQLite URL: %@", [[self applicationDocumentsDirectory] URLByAppendingPathComponent:STORE_URL_PATH_COMP]);
     
     return _persistentStoreCoordinator;
 }
